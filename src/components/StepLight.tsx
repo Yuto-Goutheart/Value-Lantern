@@ -7,9 +7,10 @@ interface Props {
   onUpdate: (d: Partial<LanternData['light']>) => void;
   onNext: () => void;
   onBack: () => void;
+  allData: LanternData;
 }
 
-export default function StepLight({ data, onUpdate, onNext, onBack }: Props) {
+export default function StepLight({ data, onUpdate, onNext, onBack, allData }: Props) {
   return (
     <StepLayout
       step={4}
@@ -19,6 +20,7 @@ export default function StepLight({ data, onUpdate, onNext, onBack }: Props) {
       onNext={onNext}
       onBack={onBack}
       nextLabel="完成へ →"
+      data={allData}
     >
       <TextArea
         label="価値観に沿って行動できた具体的な経験"

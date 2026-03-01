@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <rect x="20" y="25" width="60" height="55" rx="5" fill="#FFB347" stroke="#E67300" stroke-width="2"/>
+  <rect x="20" y="25" width="60" height="55" rx="5" fill="url(#glow)" opacity="0.6"/>
+  <rect x="35" y="5" width="30" height="20" fill="#8B4513" stroke="#5D2E0C" stroke-width="2"/>
+  <rect x="40" y="0" width="20" height="8" fill="#D4A574" stroke="#8B4513" stroke-width="1"/>
+  <rect x="35" y="80" width="30" height="15" fill="#8B4513" stroke="#5D2E0C" stroke-width="2"/>
+  <circle cx="50" cy="52" r="15" fill="#FFD700" opacity="0.9">
+    <animate attributeName="opacity" values="0.9;1;0.9" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="50" cy="52" r="20" fill="#FFD700" opacity="0.3">
+    <animate attributeName="r" values="20;25;20" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFEB3B"/>
+      <stop offset="100%" stop-color="#FF9800"/>
+    </radialGradient>
+  </defs>
+</svg>

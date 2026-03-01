@@ -7,17 +7,19 @@ interface Props {
   onUpdate: (d: Partial<LanternData['protection']>) => void;
   onNext: () => void;
   onBack: () => void;
+  allData: LanternData;
 }
 
-export default function StepProtection({ data, onUpdate, onNext, onBack }: Props) {
+export default function StepProtection({ data, onUpdate, onNext, onBack, allData }: Props) {
   return (
     <StepLayout
       step={2}
       icon="🪟"
       title="ステップ 2 — プロテクション（ガラス）"
-      description="ガラスは炎を守ります。あなたの価値観を守る行動や、サポートしてくれる人物は誰・何ですか？"
+      description="ガラスは炎を守ります。あなたの価値観を守る行動や習慣、そしてサポートしてくれる大切な人は誰・何ですか？"
       onNext={onNext}
       onBack={onBack}
+      data={allData}
     >
       <TextArea
         label="価値観を守る行動・習慣"

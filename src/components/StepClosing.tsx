@@ -7,18 +7,20 @@ interface Props {
   onUpdate: (d: Partial<LanternData['closing']>) => void;
   onComplete: () => void;
   onBack: () => void;
+  allData: LanternData;
 }
 
-export default function StepClosing({ data, onUpdate, onComplete, onBack }: Props) {
+export default function StepClosing({ data, onUpdate, onComplete, onBack, allData }: Props) {
   return (
     <StepLayout
       step={5}
       icon="🏮"
       title="ステップ 5 — クロージング"
-      description="ワークを振り返り、気づいたことや決意を記録しましょう。"
+      description="これで自分のキーとなる価値観のアウトラインができました。ワークを振り返り、気づいたことや決意を記録しましょう。"
       onNext={onComplete}
       onBack={onBack}
-      nextLabel="結果を見る"
+      nextLabel="ランタンを完成させる ✨"
+      data={allData}
     >
       <TextArea
         label="振り返り・気づき・これからの宣言"

@@ -6,9 +6,14 @@ interface Props {
   data: LanternData['flame'];
   onUpdate: (d: Partial<LanternData['flame']>) => void;
   onNext: () => void;
+  allData: LanternData;
 }
 
-export default function StepFlame({ data, onUpdate, onNext }: Props) {
+const INSTRUCTION = `> 人生に確実な保証はありません。人生では必ず困難に出会い、さらに失敗を犯します。時に、暗闇が我々を包むでしょう。しかし、もし私たちが内なる光を見つけていれば、私たちは常に光を再び見つけることができるはずです。
+>
+> このエクササイズでは、あなたは自分の内なる光を探して行きます。`;
+
+export default function StepFlame({ data, onUpdate, onNext, allData }: Props) {
   const canProceed = data.value1.trim().length > 0 && data.value2.trim().length > 0;
 
   return (
@@ -16,9 +21,11 @@ export default function StepFlame({ data, onUpdate, onNext }: Props) {
       step={1}
       icon="🔥"
       title="ステップ 1 — 炎"
-      description="あなたの人生で最も重要な価値観を 2 つ選んでください。これがランタンの炎 — あなたの核心的なエネルギー源です。"
+      description="もし人生でもっとも重要なものを２つだけ選ぶとしたら、それは何でしょうか？　あなたの核心的なエネルギー源を見つけましょう。"
+      instruction={INSTRUCTION}
       onNext={onNext}
       nextDisabled={!canProceed}
+      data={allData}
     >
       <TextInput
         label="価値観 1"
