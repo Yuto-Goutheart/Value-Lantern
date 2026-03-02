@@ -1,5 +1,4 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
-import { useSpeechContext, SESSION_KEY } from '../contexts/SpeechContext';
 
 interface UseSpeechReturn {
   speak: (text: string) => void;
@@ -9,6 +8,9 @@ interface UseSpeechReturn {
 }
 
 const TTS_ENDPOINT = 'https://texttospeech.googleapis.com/v1/text:synthesize';
+
+// Vite 環境変数からAPIキーを取得（.env.local / Vercel Environment Variables）
+const API_KEY = import.meta.env.VITE_GOOGLE_TTS_API_KEY as string | undefined;
 
 /**
  * `> ` で始まる行をすべて抽出して結合する。
@@ -33,11 +35,9 @@ export function extractInstruction(text: string): string {
 
 /**
  * Google Cloud Text-to-Speech (Standard) を使って音声読み上げを行うフック。
- * APIキーは SpeechContext から取得する。
- * キー未設定の場合は requestApiKey() で入力モーダルをトリガーする。
+ * APIキーは環境変数 VITE_GOOGLE_TTS_API_KEY から取得する。
  */
 export default function useSpeech(): UseSpeechReturn {
-  const { apiKey, requestApiKey } = useSpeechContext();
   const [isSpeaking, setIsSpeaking] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -64,16 +64,15 @@ export default function useSpeech(): UseSpeechReturn {
       const toRead = instruction.length > 0 ? instruction : text;
       if (!toRead.trim()) return;
 
-      const currentKey = apiKey || (sessionStorage.getItem(SESSION_KEY) ?? '');
-      if (!currentKey) {
-        requestApiKey(() => speak(text));
+      if (!API_KEY) {
+        console.warn('[TTS] VITE_GOOGLE_TTS_API_KEY が設定されていません。');
         return;
       }
 
       setIsSpeaking(true);
 
       try {
-        const response = await fetch(`${TTS_ENDPOINT}?key=${encodeURIComponent(currentKey)}`, {
+        const response = await fetch(`${TTS_ENDPOINT}?key=${encodeURIComponent(API_KEY)}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -125,7 +124,7 @@ export default function useSpeech(): UseSpeechReturn {
         setIsSpeaking(false);
       }
     },
-    [apiKey, requestApiKey, stop]
+    [stop]
   );
 
   const toggle = useCallback(
